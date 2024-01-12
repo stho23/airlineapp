@@ -2,7 +2,11 @@
 
 {% block body %} 
 
+    {% if request.user.is_authenticated %}
     <a href="{% url 'user_index' %}">My Account</a>
+    {% else %}
+    <a href="{% url 'register' %}">My Account</a>
+    {% endif %}
     <a href="{% url 'passengers' %}">Add Passengers</a>
     <h1>Flights</h1> 
     <ul> {% for flight in flights %} 

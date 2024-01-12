@@ -1,26 +1,37 @@
 {% extends "users/layout.html" %}
 
-{% block body %} 
+{% block body %}
+    <div class="welcome-container">
+        <h1 class="welcome-title">Welcome, {{ request.user }}</h1>
 
-    <h1>Welcome, {{ request.user }}</h1>
-
-    <div>
-        <h4>Your Fellow Passengers:</h4>
-        {% for passenger in passenger_list %}
-            <li>{{ passenger }}</li>
-        {% empty %}
-            <p>No other passengers.</p>
-        {% endfor %}
+        <a class="button" href="{% url 'flight_index' %}">See Flights</a>
         
-    </div>
-    <div>
-        <a href="{% url 'flight_index' %}">See Flights</a>
-        <a href="{% url 'passengers' %}">Add Passengers</a>
-    </div>
-    <div>
-      
+        <div class="passenger-container">
+            <h4 class="passenger-title">Your Fellow Passengers:</h4>
+            <ul class="passenger-list">
+                <div class="passenger-row">
+                    {% for passenger in passenger_list %}
+                        <li class="passenger-item">{{ passenger }}</li>
+                        {% if forloop.counter|divisibleby:4 %} {# Change '4' to the desired number of passengers per row #}
+                            </div><div class="passenger-row">
+                        {% endif %}
+                    {% empty %}
+                        <p>No other passengers.</p>
+                    {% endfor %}
+                </div>
+            </ul>
+        </div>
+
+        <div class="links-container">
+            <form method="POST" action="">
+                {% csrf_token %}
+                {{ passenger_form.as_p }}
+                <button type="submit" name="add_passenger" class="add-passenger-button">Add Passengers</button>
+            </form>
+        </div>
     </div>
 
-    <a href="{% url 'logout' %}">Logout</a>
-
+    <div class="logout-container">
+        <a class="logout-link" href="{% url 'logout' %}">Logout</a>
+    </div>
 {% endblock %}

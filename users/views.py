@@ -13,9 +13,20 @@ def index(request):
     for passenger in passengers:
         first_name = passenger.first
         passenger_list.append(first_name)
+    
+    if request.method == 'POST' and 'add_passenger' in request.POST:
+        passenger_form = PassengerForm(request.POST)
+        if passenger_form.is_valid():
+            passenger_form.save()
+            return redirect('user_index')  # Redirect to the same page after adding a passenger
+    
+    else:
+        passenger_form = PassengerForm()
+
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
-    return render(request, "users/user.html", {'passenger_list': passenger_list})
+
+    return render(request, "users/user.html", {'passenger_list': passenger_list, 'passenger_form': passenger_form})
 
 def passengers(request):
     passenger_form = PassengerForm()
@@ -24,8 +35,8 @@ def passengers(request):
 
         if passenger_form.is_valid():
             passenger = passenger_form.save(commit=False)
-            passenger.first = passenger.first.lower()
-            passenger.last = passenger.last.lower()
+            passenger.first = passenger.first
+            passenger.last = passenger.last
             passenger.save()
             return redirect("/")
     return render(request, 'users/passengers.html', {'passenger_form': passenger_form})

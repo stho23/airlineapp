@@ -1,37 +1,36 @@
 {% extends "flights/layout.html" %}
 
 {% block body %}
-    <h1>Flight {{ flight.id }}</h1>
+    <h1 class="flight-title">Flight {{ flight.id }}</h1>
 
-    <ul>
-        <li>Origin: {{ flight.origin }}</li>
-        <li>Destination: {{ flight.destination }}</li>
-        <li>Duration: {{ flight.duration }}</li>
+    <ul class="flight-info">
+        <li class="flight-info-item">Origin: {{ flight.origin }}</li>
+        <li class="flight-info-item">Destination: {{ flight.destination }}</li>
+        <li class="flight-info-item">Duration: {{ flight.duration }} minutes</li>
     </ul>
 
-    <h2>Passengers</h2>
-    <ul>
+    <h2 class="passengers-title">Passengers</h2>
+    <ul class="passenger-list">
         {% for passenger in passengers %} 
-        <li>{{ passenger }}</li>
+        <li class="passenger-item">{{ passenger }}</li>
         {% endfor %}
     </ul>
 
-    <h2>Add Passenger</h2>
+    <h2 class="add-passenger-title">Add Passenger</h2>
 
-    <form action="{% url 'book' flight.id %}" method="post">
+    <form class="add-passenger-form" action="{% url 'book' flight.id %}" method="post">
         {% csrf_token %} 
-        <select name="passenger">
-            <h1>{{ non_passengers.count }} </h1>
+        <select class="passenger-select" name="passenger">
+            <h1>{{ non_passengers.count }}</h1>
             {% for passenger in non_passengers %}
-                <option value=" {{ passenger.id }}">{{ passenger }}</option>
+                <option value="{{ passenger.id }}">{{ passenger }}</option>
             {% empty %}
-                <h2>No passengers left to add.</h2>
+                <h2 class="no-passengers-message">No passengers left to add.</h2>
             {% endfor %}
         </select>
         {% if non_passengers.count is not 0 %}
-            <input type="submit">
+            <input class="add-passenger-submit" type="submit">
         {% endif %}
     </form>
-    <a href="{% url 'flight_index' %}">Back To Flight List</a>
+    <a class="back-to-flight-list" href="{% url 'flight_index' %}">Back To Flight List</a>
 {% endblock %}
-

@@ -6,6 +6,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+   /* Style the passenger rows */
+/* Center the container */
+.welcome-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* Style the passenger items */
+.passenger-item {
+    display: inline-block; /* Display passengers in a grid format */
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc; /* Add a border around each passenger */
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: 'Arial', sans-serif; /* Change font family here */
+}
+
+/* Style the form and button container */
+.form-button-container {
+    display: flex;
+    justify-content: space-between; /* Align the form and button to the sides */
+    width: 100%;
+    max-width: 400px; /* Adjust the max-width as needed */
+}
+
+/* Style the form */
+.links-container form {
+    display: inline-block; /* Display the form next to the passengers */
+    vertical-align: top; /* Align the form to the top of the grid */
+    margin-top: 20px;
+}
+
+/* Style the buttons */
+.add-passenger-button, .button {
+    background-color: #007bff; /* Blue background color */
+    color: #fff; /* White text color */
+    border: none; /* Remove borders */
+    padding: 10px 20px; /* Add padding to the buttons */
+    cursor: pointer; /* Change cursor on hover */
+    font-family: 'Arial', sans-serif; /* Change font family here */
+}
+
+/* Add hover effect to the buttons */
+.add-passenger-button:hover, .button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+</style>
 <body>
     {% block body %} 
     {% endblock %}

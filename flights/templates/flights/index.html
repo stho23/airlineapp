@@ -1,36 +1,51 @@
-{% extends "flights/layout.html" %} 
+{% extends "flights/layout.html" %}
 
-{% block body %} 
-
-    {% if request.user.is_authenticated %}
-    <a href="{% url 'user_index' %}">My Account</a>
-    {% else %}
-    <a href="{% url 'register' %}">My Account</a>
-    {% endif %}
-    <a href="{% url 'passengers' %}">Add Passengers</a>
-    <h1>Flights</h1> 
-    <ul> {% for flight in flights %} 
-        <a href="{% url 'flight' flight.id %}">
-        <li> Flight {{ flight.id }}: {{ flight.origin }} to {{ flight.destination }}</li> 
-        </a>  
-        {% endfor %} 
-    </ul> 
-
-    <h1>Add Airport</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ airport_form.as_p }}
-        <button type="submit" name="add_airport">Add Airport</button>
-    </form>
-
-    <h1>Add Flight</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ flight_form.as_p }}
-        <button type="submit" name="add_flight">Add Flight</button>
-    </form>
- 
-
-  
-
+{% block body %}
+    <div class="container">
+        <div class="left-panel">
+            <a href="{% url 'user_index' %}">My Account</a>
+            <h1>Flights</h1>
+            <ul>
+                {% for flight in flights %}
+                    <a href="{% url 'flight' flight.id %}">
+                        <li> Flight {{ flight.id }}: {{ flight.origin }} to {{ flight.destination }}</li>
+                    </a>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="right-panel">
+            <h1>Add Airport</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ airport_form.as_p }}
+                <!-- Display errors for each field -->
+                {% for field in airport_form %}
+                    {% for error in field.errors %}
+                        <div class="error-message">{{ error }}</div>
+                    {% endfor %}
+                {% endfor %}
+                <!-- Display non-field errors -->
+                {% for error in airport_form.non_field_errors %}
+                    <div class="error-message">{{ error }}</div>
+                {% endfor %}
+                <button type="submit" name="add_airport">Add Airport</button>
+            </form>
+        
+            <h1>Add Flight</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ flight_form.as_p }}
+                <!-- Display errors for each field -->
+                {% for field in flight_form %}
+                    {% for error in field.errors %}
+                        <div class="error-message">{{ error }}</div>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in flight_form.non_field_errors %}
+                    <div class="error-message">{{ error }}</div>
+                {% endfor %}
+                <button type="submit" name="add_flight">Add Flight</button>
+            </form>
+        </div>        
+    </div>
 {% endblock %}

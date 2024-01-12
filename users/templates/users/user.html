@@ -2,12 +2,24 @@
 
 {% block body %} 
 
-    <h1>Welcome, {{ request.user.first_name }}</h1>
+    <h1>Welcome, {{ request.user }}</h1>
 
-    <ul>
-        <li>Username: {{ request.user.username }}</li>
-        <li>Email: {{ request.user.email }}</li>
-    </ul>
+    <div>
+        <h4>Your Fellow Passengers:</h4>
+        {% for passenger in passenger_list %}
+            <li>{{ passenger }}</li>
+        {% empty %}
+            <p>No other passengers.</p>
+        {% endfor %}
+        
+    </div>
+    <div>
+        <a href="{% url 'flight_index' %}">See Flights</a>
+        <a href="{% url 'passengers' %}">Add Passengers</a>
+    </div>
+    <div>
+      
+    </div>
 
     <a href="{% url 'logout' %}">Logout</a>
 

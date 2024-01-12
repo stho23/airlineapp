@@ -2,6 +2,8 @@
 
 {% block body %} 
 
+    <a href="{% url 'user_index' %}">My Account</a>
+    <a href="{% url 'passengers' %}">Add Passengers</a>
     <h1>Flights</h1> 
     <ul> {% for flight in flights %} 
         <a href="{% url 'flight' flight.id %}">
@@ -9,5 +11,22 @@
         </a>  
         {% endfor %} 
     </ul> 
+
+    <h1>Add Airport</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ airport_form.as_p }}
+        <button type="submit" name="add_airport">Add Airport</button>
+    </form>
+
+    <h1>Add Flight</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ flight_form.as_p }}
+        <button type="submit" name="add_flight">Add Flight</button>
+    </form>
+ 
+
+  
 
 {% endblock %}

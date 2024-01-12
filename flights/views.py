@@ -1,13 +1,29 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import *
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from .forms import AirportForm, FlightForm
 
 # Create your views here.
 def index(request):
+    if request.method == 'POST':
+        if 'add_airport' in request.POST:
+            airport_form = AirportForm(request.POST)
+            if airport_form.is_valid():
+                airport_form.save()
+                return redirect('/')
+        elif 'add_flight' in request.POST:
+            flight_form = FlightForm(request.POST)
+            if flight_form.is_valid():
+                flight_form.save()
+                return redirect('/')
+    else:
+        airport_form = AirportForm()
+        flight_form = FlightForm()
+
     return render(request, "flights/index.html", {
-        "flights": Flight.objects.all()
-    })
+        "flights": Flight.objects.all(), 'airport_form': airport_form, 'flight_form': flight_form})
+
 
 def flight(request, flight_id):
     flight = Flight.objects.get(id=flight_id)

@@ -1,0 +1,14 @@
+{% extends "users/layout.html" %} 
+
+{% block body %}
+
+<div>
+    Add Passengers
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{ passenger_form.as_p }}
+        <input type="submit" value="Register">
+    </form>
+</div>
+
+{% endblock %}
